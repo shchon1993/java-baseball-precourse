@@ -18,7 +18,7 @@ public class baseBallView {
         return "N";
     }
     public static void getballStrikeMessage(baseBallGame game){
-        System.out.println(game.getBall_cnt()+message.getBallMessage()+game.getStrike_cnt()+message.getStrikeMessage());
+        System.out.println(game.getBall_cnt()+message.getBallMessage()+" "+game.getStrike_cnt()+message.getStrikeMessage());
     }
 
 }

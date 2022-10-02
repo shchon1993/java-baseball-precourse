@@ -17,6 +17,6 @@ public class baseBallMessage {
         System.out.println("3스트라이크");
     }
     public void baseballGameEndYnMessage(){
-        System.out.println("3개의숫자를모두맞히셨습니다!게임종료\n" + "게임을새로시작하려면1,종료하려면2를입력하세요.");
+        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료\n" + "게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
     }
 }

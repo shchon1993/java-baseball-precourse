@@ -21,16 +21,12 @@ public class baseBallController {
         while(endGameYn) {
             gameSetting();
             result = baseBallView.view(game.getStrike_cnt(), game.getBall_cnt(), game);
-            System.out.println(result);
-            if(result.equals("Y"))
-                endGame();
+            end(result);
         }
     }
     public void gameSetting(){
         if(initGame) {
             game.setBall(baseBallService.createnum());
-            int arr[] = game.getBall();
-            System.out.println(arr[0] + " " + arr[1] + " " + arr[2]);
         }
         user.setUser(baseBallService.createusernum());
         game.setStrike_cnt(baseBallService.strike(game, user));
@@ -47,5 +43,9 @@ public class baseBallController {
         }
         endGameYn = true;
         initGame = true;
+    }
+    public void end(String result){
+        if(result.equals("Y"))
+            endGame();
     }
 }

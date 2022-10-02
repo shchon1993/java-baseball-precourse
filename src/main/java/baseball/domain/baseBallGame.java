@@ -1,7 +1,9 @@
 package baseball.domain;
 
+import java.util.List;
+
 public class baseBallGame {
-    private int ball[];
+    private List<Integer> ball;
     private int strike_cnt;
     private int ball_cnt;
     private int game_yn;
@@ -24,10 +26,13 @@ public class baseBallGame {
     public void setStrike_cnt(int strike_cnt) {
         this.strike_cnt = strike_cnt;
     }
-    public int[] getBall() {
+    public List<Integer> getBall() {
         return ball;
     }
-    public void setBall(int[] ball) {
+
+    public void setBall(List<Integer> ball) {
         this.ball = ball;
     }
+
+
 }

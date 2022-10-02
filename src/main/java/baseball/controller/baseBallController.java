@@ -5,11 +5,14 @@ import baseball.domain.baseBallGame;
 import baseball.domain.baseBallUser;
 import baseball.model.baseBallGameService;
 import baseball.model.baseBallGameServiceImple;
+import baseball.view.baseBallView;
 
 public class baseBallController {
     private static baseBallUser user = new baseBallUser();
     private static baseBallGame game = new baseBallGame();
     private baseBallGameService baseBallService = new baseBallGameServiceImple();
+    private static baseball.view.baseBallView baseBallView = new baseBallView();
+    private static String result = "";
 
     public void run() {
         int i = 0;
@@ -20,7 +23,8 @@ public class baseBallController {
             user.setUser(baseBallService.createusernum());
             game.setStrike_cnt(baseBallService.strike(game, user));
             game.setBall_cnt(baseBallService.ball(game, user));
-            System.out.println(game.getBall_cnt() + "볼" + game.getStrike_cnt() + "스트라이크");
+            result = baseBallView.view(game.getStrike_cnt(), game.getBall_cnt(), game);
+            System.out.println(result);
             i++;
         }
     }

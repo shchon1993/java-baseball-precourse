@@ -2,12 +2,14 @@ package baseball.model;
 
 import baseball.domain.baseBallGame;
 import baseball.domain.baseBallUser;
+import baseball.view.baseBallMessage;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.List;
 
 public class baseBallGameServiceImple implements baseBallGameService{
+    private baseBallMessage message = new baseBallMessage();
     private static int game_arr[] =new int[3];
     private static int user_arr[] = new int[3];
     private static List<Integer> numbers  = new ArrayList<>();
@@ -20,11 +22,15 @@ public class baseBallGameServiceImple implements baseBallGameService{
 
     //사용자 숫자 입력
     public int[] createusernum() {
-        System.out.print("숫자를 입력해 주세요 : ");
-        String str = Console.readLine();
-        String strarr[] = str.split("");
-        for (int i = 0; i < 3; i++) {
-            user_arr[i] = Integer.parseInt(strarr[i]);
+        message.inputNumberMessage();
+        try {
+            String str = Console.readLine();
+            String strarr[] = str.split("");
+            for (int i = 0; i < 3; i++) {
+                user_arr[i] = Integer.parseInt(strarr[i]);
+            }
+        }catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
         }
         return  user_arr;
     }
@@ -36,29 +42,34 @@ public class baseBallGameServiceImple implements baseBallGameService{
             numbers.add(i);
         }
         for(int i = 0; i<3; i++){
-            game_arr[i] = createrepeatnum();
+            game_arr[i] = createrepeatnum(numbers);
         }
         return game_arr;
     }
 
     //중복체크하여 난수 생성
-    public static int createrepeatnum(){
-        int temp = Randoms.pickNumberInList(numbers);
+    public static int createrepeatnum(List<Integer> num){
+        int temp = Randoms.pickNumberInList(num);
         finish = createrepeatnumchk(temp);
         if(!finish){
             repeatNumChk += String.valueOf(temp);
             return temp;
         }
-        while(finish){
-            temp = Randoms.pickNumberInList(numbers);
-            finish = createrepeatnumchk(temp);
-        }
+        temp = createrepeat();
         repeatNumChk += String.valueOf(temp);
         return temp;
     }
     public static boolean createrepeatnumchk(int num){
         boolean finishTemp = repeatNumChk.contains(String.valueOf(num));
         return finishTemp;
+    }
+    public static int createrepeat(){
+        int temp = 0;
+        while(finish){
+            temp = Randoms.pickNumberInList(numbers);
+            finish = createrepeatnumchk(temp);
+        }
+        return temp;
     }
     //스트라이크
     public int strike(baseBallGame game, baseBallUser user){

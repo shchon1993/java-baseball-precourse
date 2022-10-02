@@ -21,12 +21,22 @@ public class baseBallGameServiceImple implements baseBallGameService{
     public int[] createusernum(){
         message.inputNumberMessage();
         String str = Console.readLine();
+        if(!isNumeric(str))
+            throw new IllegalArgumentException("숫자만 입력해주세요.");
         String strarr[] = str.split("");
         createusernumException(strarr);
         for (int i = 0; i < 3; i++) {
             user_arr[i] = Integer.parseInt(strarr[i]);
         }
         return  user_arr;
+    }
+    public boolean isNumeric(String str){
+       try {
+           Integer.parseInt(str);
+           return true;
+       }catch(IllegalArgumentException e){
+           return false;
+       }
     }
     public void createusernumException(String strarr[]){
         if(strarr.length != 3)

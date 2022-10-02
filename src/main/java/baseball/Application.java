@@ -8,6 +8,4 @@ public class Application {
         baseBallController baseBallController = new baseBallController();
         baseBallController.run();
     }
-
-
 }

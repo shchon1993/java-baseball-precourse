@@ -8,4 +8,5 @@ public interface baseBallGameService {
     int[] createnum();
     int strike(baseBallGame game, baseBallUser user);
     int ball(baseBallGame game, baseBallUser user);
+    int end();
 }

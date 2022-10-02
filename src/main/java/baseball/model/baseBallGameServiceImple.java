@@ -21,18 +21,27 @@ public class baseBallGameServiceImple implements baseBallGameService{
     private static boolean finish;
 
     //사용자 숫자 입력
-    public int[] createusernum() {
+    public int[] createusernum() throws IllegalArgumentException{
         message.inputNumberMessage();
-        try {
-            String str = Console.readLine();
-            String strarr[] = str.split("");
-            for (int i = 0; i < 3; i++) {
-                user_arr[i] = Integer.parseInt(strarr[i]);
-            }
-        }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
+        String str = Console.readLine();
+        String strarr[] = str.split("");
+        createusernumException(strarr);
+        for (int i = 0; i < 3; i++) {
+            user_arr[i] = Integer.parseInt(strarr[i]);
         }
         return  user_arr;
+    }
+    public void createusernumException(String strarr[]) throws IllegalArgumentException{
+        if(strarr.length != 3)
+            throw new IllegalArgumentException();
+        if(Integer.parseInt(strarr[0]) == Integer.parseInt(strarr[1]) || Integer.parseInt(strarr[0]) == Integer.parseInt(strarr[2]) || Integer.parseInt(strarr[1]) == Integer.parseInt(strarr[2]))
+            throw new IllegalArgumentException();
+        if(Integer.parseInt(strarr[0]) >= 10 && Integer.parseInt(strarr[0]) <= 0)
+            throw new IllegalArgumentException();
+        if(Integer.parseInt(strarr[1]) >= 10 && Integer.parseInt(strarr[1]) <= 0)
+            throw new IllegalArgumentException();
+        if(Integer.parseInt(strarr[2]) >= 10 && Integer.parseInt(strarr[2]) <= 0)
+            throw new IllegalArgumentException();
     }
 
     //난수 생성
@@ -90,5 +99,15 @@ public class baseBallGameServiceImple implements baseBallGameService{
         if((game_num[0] == user_num[1]) || (game_num[2] == user_num[1])) ball_cnt++;
         if((game_num[0] == user_num[2]) || (game_num[1] == user_num[2])) ball_cnt++;
         return ball_cnt;
+    }
+    public int end() throws IllegalArgumentException{
+        message.baseballGameEndYnMessage();
+        String str = Console.readLine();
+        if(!(str.equals("1") || str.equals("2")))
+            throw new IllegalArgumentException();
+        if(str.equals("2")) {
+            return 2;
+        }
+        return 1;
     }
 }

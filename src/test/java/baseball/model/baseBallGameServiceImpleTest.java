@@ -18,7 +18,6 @@ public class baseBallGameServiceImpleTest {
     @DisplayName("사용자 입력 테스트(2개 이하의 숫자 입력했을 경우)")
     @Test
     void createusernumundercnt() {
-        baseBallUser user = new baseBallUser();
         assertThatIllegalArgumentException().isThrownBy(() -> {
             serviceImple.createusernum("12");
         });
@@ -27,7 +26,6 @@ public class baseBallGameServiceImpleTest {
     @DisplayName("사용자 입력 테스트(4개 이상의 숫자 입력했을 경우)")
     @Test
     void createusernumovercnt() {
-        baseBallUser user = new baseBallUser();
         assertThatIllegalArgumentException().isThrownBy(() -> {
             serviceImple.createusernum("1234");
         });
@@ -35,7 +33,6 @@ public class baseBallGameServiceImpleTest {
     @DisplayName("사용자 입력 테스트(중복 숫자 입력)")
     @Test
     void createusernumrepeat() {
-        baseBallUser user = new baseBallUser();
         assertThatIllegalArgumentException().isThrownBy(() -> {
             serviceImple.createusernum("133");
         });

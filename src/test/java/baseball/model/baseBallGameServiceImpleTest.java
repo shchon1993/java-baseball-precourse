@@ -2,65 +2,96 @@ package baseball.model;
 
 import baseball.domain.baseBallGame;
 import baseball.domain.baseBallUser;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+
 
 
 public class baseBallGameServiceImpleTest {
     private baseBallGameServiceImple serviceImple = new baseBallGameServiceImple();
 
+    @DisplayName("사용자 입력 테스트(2개 이하의 숫자 입력했을 경우)")
     @Test
-    public void createusernum() {
-        //given
-        int testarr[] = new int[3];
-        //when
-        testarr = serviceImple.createusernum();
-        //then
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,()-> serviceImple.createusernum());
-        assertThat(e.getMessage()).isEqualTo("숫자를 잘못 입력하였습니다.");
-    }
-    @Test
-    public void createnum(){
-        String repeatNumChk = "";
-        List<Integer> numbers  = new ArrayList<>();
-        int game_arr[] = new int[3];
-        for(int i=1;i<=9;i++){
-            numbers.add(i);
-        }
-        for(int i = 0; i<3; i++){
-            game_arr[i] = serviceImple.createrepeatnum(numbers);
-        }
-        int test[] = {1,2,3,4,5,7,8,9};
-        assertThat(game_arr).contains(test);
+    void createusernumundercnt() {
+        baseBallUser user = new baseBallUser();
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            serviceImple.createusernum("12");
+        });
     }
 
+    @DisplayName("사용자 입력 테스트(4개 이상의 숫자 입력했을 경우)")
+    @Test
+    void createusernumovercnt() {
+        baseBallUser user = new baseBallUser();
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            serviceImple.createusernum("1234");
+        });
+    }
+    @DisplayName("사용자 입력 테스트(중복 숫자 입력)")
+    @Test
+    void createusernumrepeat() {
+        baseBallUser user = new baseBallUser();
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            serviceImple.createusernum("133");
+        });
+    }
+    @DisplayName("사용자 입력 테스트(정상)")
+    @Test
+    void createusernum() {
+        baseBallUser user = new baseBallUser();
+        user.setUser(Arrays.asList(5,4,2));
+        assertThat(user.getUser().size()).isEqualTo(3);
+    }
+    @DisplayName("스트라이크 수 0~3")
     @Test
     public void strike(){
         baseBallGame game = new baseBallGame();
         baseBallUser user = new baseBallUser();
-        int gameArr[] = {2,3,4};
-        int userArr[] = {1,2,3};
-        game.setBall(gameArr);
-        user.setUser(userArr);
+        game.setBall(Arrays.asList(3,2,4));
+        user.setUser(Arrays.asList(1,2,3));
         int strike_cnt = serviceImple.strike(game,user);
         assertThat(strike_cnt).isLessThan(4).isGreaterThan(-1);
     }
+    @DisplayName("낫싱")
+    @Test
+    public void nothing(){
+        baseBallGame game = new baseBallGame();
+        baseBallUser user = new baseBallUser();
+        game.setBall(Arrays.asList(4,5,6));
+        user.setUser(Arrays.asList(1,2,3));
+        int strike_cnt = serviceImple.strike(game,user);
+        int ball_cnt = serviceImple.ball(game,user);
+        assertThat(strike_cnt).isEqualTo(0);
+        assertThat(ball_cnt).isEqualTo(0);
+    }
+    @DisplayName("스트라이크,볼")
+    @Test
+    public void strikeCnt(){
+        baseBallGame game = new baseBallGame();
+        baseBallUser user = new baseBallUser();
+        game.setBall(Arrays.asList(4,5,2));
+        user.setUser(Arrays.asList(4,2,3));
+        int strike_cnt = serviceImple.strike(game,user);
+        int ball_cnt = serviceImple.ball(game,user);
+        assertThat(strike_cnt).isEqualTo(1);
+        assertThat(ball_cnt).isEqualTo(1);
+    }
+    @DisplayName("볼 수 0 ~ 3")
     @Test
     public void ball(){
         baseBallGame game = new baseBallGame();
         baseBallUser user = new baseBallUser();
-        int gameArr[] = {2,3,4};
-        int userArr[] = {1,2,3};
-        game.setBall(gameArr);
-        user.setUser(userArr);
-        int strike_cnt = serviceImple.ball(game,user);
-        assertThat(strike_cnt).isLessThan(4).isGreaterThan(-1);
+        game.setBall(Arrays.asList(3,2,4));
+        user.setUser(Arrays.asList(1,2,3));
+        int ball_cnt = serviceImple.ball(game,user);
+        assertThat(ball_cnt).isLessThan(4).isGreaterThan(-1);
     }
+
 
 
 

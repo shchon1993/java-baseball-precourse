@@ -5,7 +5,7 @@ import baseball.domain.baseBallGame;
 
 public class baseBallView {
     private static baseBallMessage message = new baseBallMessage();
-    public String view(int strike_cnt, int ball_cnt, baseBallGame game) {
+    public static String view(int strike_cnt, int ball_cnt, baseBallGame game) {
         if(strike_cnt == 0 && ball_cnt == 0){
             message.getNothingMessage();
             return "N";

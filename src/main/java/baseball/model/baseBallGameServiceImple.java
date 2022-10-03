@@ -10,23 +10,22 @@ import java.util.*;
 
 public class baseBallGameServiceImple implements baseBallGameService{
     private baseBallMessage message = new baseBallMessage();
-    private static int user_arr[] = new int[3];
+    private static List<Integer> user_arr;
+    private static List<Integer> user_num;
     private static List<Integer> game_num;
-    private static int user_num[] = new int[3];
+    private static List<Integer> game_ball;
     private static int strike_cnt = 0;
     private static int ball_cnt = 0;
-    private static List<Integer> game_ball;
+
 
     //사용자 숫자 입력
-    public int[] createusernum(){
-        message.inputNumberMessage();
-        String str = Console.readLine();
-        if(!isNumeric(str))
-            throw new IllegalArgumentException("숫자만 입력해주세요.");
+    public List<Integer> createusernum(String str){
+        user_arr = new LinkedList<>();
+        createusernumstrchkException(str);
         String strarr[] = str.split("");
         createusernumException(strarr);
         for (int i = 0; i < 3; i++) {
-            user_arr[i] = Integer.parseInt(strarr[i]);
+             user_arr.add(Integer.parseInt(strarr[i]));
         }
         return  user_arr;
     }
@@ -37,6 +36,10 @@ public class baseBallGameServiceImple implements baseBallGameService{
        }catch(IllegalArgumentException e){
            return false;
        }
+    }
+    public void createusernumstrchkException(String str){
+         if(!isNumeric(str))
+            throw new IllegalArgumentException("숫자만 입력해주세요.");
     }
     public void createusernumException(String strarr[]){
         if(strarr.length != 3)
@@ -71,18 +74,18 @@ public class baseBallGameServiceImple implements baseBallGameService{
         strike_cnt = 0;
         game_num = game.getBall();
         user_num = user.getUser();
-        if(game_num.get(0) == user_num[0]) strike_cnt++;
-        if(game_num.get(1) == user_num[1]) strike_cnt++;
-        if(game_num.get(2) == user_num[2]) strike_cnt++;
+        if(game_num.get(0) == user_num.get(0)) strike_cnt++;
+        if(game_num.get(1) == user_num.get(1)) strike_cnt++;
+        if(game_num.get(2) == user_num.get(2)) strike_cnt++;
         return strike_cnt;
     }
     public int ball(baseBallGame game,  baseBallUser user){
         ball_cnt = 0;
         game_num = game.getBall();
         user_num = user.getUser();
-        if((game_num.get(1) == user_num[0]) || (game_num.get(2) == user_num[0])) ball_cnt++;
-        if((game_num.get(0) == user_num[1]) || (game_num.get(2) == user_num[1])) ball_cnt++;
-        if((game_num.get(0) == user_num[2]) || (game_num.get(1) == user_num[2])) ball_cnt++;
+        if((game_num.get(1) == user_num.get(0)) || (game_num.get(2) == user_num.get(0))) ball_cnt++;
+        if((game_num.get(0) == user_num.get(1)) || (game_num.get(2) == user_num.get(1))) ball_cnt++;
+        if((game_num.get(0) == user_num.get(2)) || (game_num.get(1) == user_num.get(2))) ball_cnt++;
         return ball_cnt;
     }
     public int end(){

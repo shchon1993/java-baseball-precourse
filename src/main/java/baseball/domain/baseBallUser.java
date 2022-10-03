@@ -1,11 +1,15 @@
 package baseball.domain;
 
+import java.util.List;
+
 public class baseBallUser {
-    private int user[];
-    public int[] getUser() {
+    private List<Integer> user;
+
+    public List<Integer> getUser() {
         return user;
     }
-    public void setUser(int[] user) {
+
+    public void setUser(List<Integer> user) {
         this.user = user;
     }
 }

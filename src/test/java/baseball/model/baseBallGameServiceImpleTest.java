@@ -44,50 +44,23 @@ public class baseBallGameServiceImpleTest {
         user.setUser(Arrays.asList(5,4,2));
         assertThat(user.getUser().size()).isEqualTo(3);
     }
-    @DisplayName("스트라이크 수 0~3")
+    @DisplayName("컴퓨터 번호 생성(3자리)")
     @Test
-    public void strike(){
+    void createnum() {
         baseBallGame game = new baseBallGame();
-        baseBallUser user = new baseBallUser();
-        game.setBall(Arrays.asList(3,2,4));
-        user.setUser(Arrays.asList(1,2,3));
-        int strike_cnt = serviceImple.strike(game,user);
-        assertThat(strike_cnt).isLessThan(4).isGreaterThan(-1);
+        game.setBall(serviceImple.createnum());
+        assertThat(game.getBall().size()).isEqualTo(3);
     }
-    @DisplayName("낫싱")
+    @DisplayName("컴퓨터 번호 중복된 자리 생성")
     @Test
-    public void nothing(){
+    void createnumrepeat() {
         baseBallGame game = new baseBallGame();
-        baseBallUser user = new baseBallUser();
-        game.setBall(Arrays.asList(4,5,6));
-        user.setUser(Arrays.asList(1,2,3));
-        int strike_cnt = serviceImple.strike(game,user);
-        int ball_cnt = serviceImple.ball(game,user);
-        assertThat(strike_cnt).isEqualTo(0);
-        assertThat(ball_cnt).isEqualTo(0);
+        game.setBall(serviceImple.createnum());
+        assertThat(game.getBall().get(0)).isNotEqualTo(game.getBall().get(1));
+        assertThat(game.getBall().get(0)).isNotEqualTo(game.getBall().get(2));
+        assertThat(game.getBall().get(1)).isNotEqualTo(game.getBall().get(2));
     }
-    @DisplayName("스트라이크,볼")
-    @Test
-    public void strikeCnt(){
-        baseBallGame game = new baseBallGame();
-        baseBallUser user = new baseBallUser();
-        game.setBall(Arrays.asList(4,5,2));
-        user.setUser(Arrays.asList(4,2,3));
-        int strike_cnt = serviceImple.strike(game,user);
-        int ball_cnt = serviceImple.ball(game,user);
-        assertThat(strike_cnt).isEqualTo(1);
-        assertThat(ball_cnt).isEqualTo(1);
-    }
-    @DisplayName("볼 수 0 ~ 3")
-    @Test
-    public void ball(){
-        baseBallGame game = new baseBallGame();
-        baseBallUser user = new baseBallUser();
-        game.setBall(Arrays.asList(3,2,4));
-        user.setUser(Arrays.asList(1,2,3));
-        int ball_cnt = serviceImple.ball(game,user);
-        assertThat(ball_cnt).isLessThan(4).isGreaterThan(-1);
-    }
+
 
 
 
